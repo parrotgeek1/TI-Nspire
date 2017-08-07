@@ -1,0 +1,4 @@
+pw 118b6fdc E3A00001
+
+bar rgb565 0xCE59
+bg 0x0841

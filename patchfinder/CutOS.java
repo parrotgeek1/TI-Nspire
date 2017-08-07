@@ -1,0 +1,41 @@
+import java.io.*;
+import java.util.*;
+import java.nio.*;
+import java.nio.file.*;
+
+public class CutOS {
+	public static int indexOf(byte[] outerArray, byte[] smallerArray) {
+		for(int i = 0; i < outerArray.length - smallerArray.length+1; ++i) {
+			boolean found = true;
+			for(int j = 0; j < smallerArray.length; ++j) {
+				if (outerArray[i+j] != smallerArray[j]) {
+					found = false;
+					break;
+				}
+			}
+			if (found) return i;
+		}
+		return -1;
+	}
+	
+	public static void main(String args[]) throws Exception {
+		String in = args[0];
+		String out = args[1];
+		byte[] bytes = Files.readAllBytes(Paths.get(in));
+		// thanks critor
+		byte[] patt = new byte[]{
+			(byte)0x12, (byte)0x0C, (byte)0xF0, (byte)0x8F, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0x90, (byte)0x12, (byte)0x0C, (byte)0x10, (byte)0x90, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xA0,
+			(byte)0x1A, (byte)0x0C, (byte)0x00, (byte)0xA4, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xAC, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xB0, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xB4,
+			(byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xB8, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xBC, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xC0, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xC4,
+			(byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xC8, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xCC, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xDC, (byte)0x12, (byte)0x0C, (byte)0x00, (byte)0xA9,
+			(byte)0x12, (byte)0x0C, (byte)0x00, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x10, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x20, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x30, (byte)0x81,
+			(byte)0x12, (byte)0x0C, (byte)0x40, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x50, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x60, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x70, (byte)0x81,
+			(byte)0x12, (byte)0x0C, (byte)0x80, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0x90, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0xA0, (byte)0x81, (byte)0x12, (byte)0x0C, (byte)0xB0, (byte)0x81
+		};
+		int w = indexOf(bytes,patt);
+		byte [] subArray = Arrays.copyOfRange(bytes, 0, w+patt.length);
+		FileOutputStream fos = new FileOutputStream(out);
+		fos.write(subArray);
+		fos.close();
+	}
+}

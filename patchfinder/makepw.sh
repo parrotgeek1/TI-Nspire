@@ -1,0 +1,1 @@
+cat patches.c | grep -v '^#' | grep put_word | sed 's/^.*(0x/pw /' | sed 's/NOP/0x00000000/' | sed 's/, 0x/ /' |cut -d ')' -f 1 > pw.txt

@@ -1,0 +1,20 @@
+To make a cas patch for other OS
+
+you need:
+
+Linux, Mac, or Bash on Windows 10
+Wine, if on Mac or Linux (can't get wm command to work in firebird)
+Java
+arm-none-eabi toolchain in your $PATH
+nspire-emu, and boot1/boot2
+
+1) install the os into nspire-emu [in wine if on mac/linux]
+2) enter debugger, type "k 10000000", then "c"
+3) reset emulation
+4) when progress bar is at end it will hit a breakpoint
+5) in debugger type "wm os.bin 10000000 2000000" then "q"
+6) move os.bin to patchfinder folder, cd to the patchfinder folder
+7) run ./mkpatcher.sh os.bin out.tns [N or C for non-cas/cas OS]
+   It will take a long time, maybe even 4 or 5 minutes
+8) out.tns is your patcher! put it on the calculator in the /ndless/startup folder, or as /ndless/ndless_resources.tns if you don't want ndless
+9) delete os.bin

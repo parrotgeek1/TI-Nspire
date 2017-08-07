@@ -1,0 +1,32 @@
+From a16b9f267bf876e516384649cae66dd43339d58c Mon Sep 17 00:00:00 2001
+From: Ethan <parrotgeek1@gmail.com>
+Date: Sat, 28 Jan 2017 15:21:58 -0800
+Subject: [PATCH 1/9] Update misc.c
+
+---
+ core/misc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/core/misc.c b/core/misc.c
+index e689a89..0be513f 100644
+--- a/core/misc.c
++++ b/core/misc.c
+@@ -500,8 +500,13 @@ uint32_t misc_read(uint32_t addr) {
+          *
+          * Anyway, bits 58-62 are the "ASIC user flags", a byte which must
+          * match the 80E0 field in an OS image. 01 = CAS, 00 = non-CAS. */
+-        case 0x28: return idreg[asic_user_flags].lo;
+-        case 0x2C: return idreg[asic_user_flags].hi;
++            
++        case 0x28: 
++            debugger(DBG_USER, 0);
++            return idreg[asic_user_flags].lo;
++        case 0x2C: 
++            debugger(DBG_USER, 0);
++            return idreg[asic_user_flags].hi;
+     }
+     return bad_read_word(addr);
+ }
+-- 
+2.11.0 (Apple Git-81)
+

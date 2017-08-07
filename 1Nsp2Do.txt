@@ -1,0 +1,8 @@
+patch boot2 to reboot after installing OS
+make a patch for manifest bypass
+original manuf logo in boot2, add preparing fs patch
+Old Boot2 versions are re-outputting the Nspire logo.
+bad boot2 patch 3.1 & cm help him
+fix cas patch reboot tmpcnv
+add overclock to my nlaunchy
+my nlaunchy cm? 3.1 boot2 classic?

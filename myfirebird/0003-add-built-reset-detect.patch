@@ -1,0 +1,19 @@
+diff --git a/core/misc.c b/core/misc.c
+index 23524ff..65d6901 100644
+--- a/core/misc.c
++++ b/core/misc.c
+@@ -514,7 +514,10 @@ void misc_write(uint32_t addr, uint32_t value) {
+     struct timerpair *tp = &timer.pairs[(addr - 0x10) >> 3 & 3];
+     switch (addr & 0x0FFF) {
+         case 0x04: return;
+-        case 0x08: cpu_events |= EVENT_RESET; return;
++        case 0x08:
++			warn("tried to reset cpu at PC");
++			cpu_events |= EVENT_RESET;
++			return;
+         case 0x10: case 0x18: case 0x20:
+             if (emulate_cx) break;
+             tp->int_status &= ~value;
+-- 
+2.11.0 (Apple Git-81)
+

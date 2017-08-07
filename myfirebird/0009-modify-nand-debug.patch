@@ -1,0 +1,29 @@
+diff --git a/core/flash.cpp b/core/flash.cpp
+index 045288c..5124a4f 100644
+--- a/core/flash.cpp
++++ b/core/flash.cpp
+@@ -15,7 +15,7 @@ extern struct arm_state arm;
+ nand_state nand;
+ static uint8_t *nand_data = NULL;
+ 
+-uint32_t lastreadpc = 1;
++uint32_t lastreadlr = 1;
+ 
+ static const struct nand_metrics chips[] = {
+     { 0x20, 0x35, 0x210, 5, 0x10000 }, // ST Micro NAND256R3A
+@@ -168,9 +168,9 @@ uint32_t nand_read_data_word() {
+                 return 0;
+             }
+ 		calcd= nand.nand_row * nand.metrics.page_size + (nand.nand_col += 4) - 4;
+-		if(lastreadpc != arm.reg[15] && calcd < 0x1000) {
+-			printf("read low nand 0x%X at pc 0x%08X\n",calcd,arm.reg[15]);
+-			lastreadpc = arm.reg[15];
++		if(lastreadlr != arm.reg[14] && calcd < 0x1000) {
++			printf("read low nand 0x%X at lr 0x%08X\n",calcd,arm.reg[14]);
++			lastreadlr = arm.reg[14];
+ 		}
+             return *(uint32_t *)&nand_data[calcd];
+         case 0x70: return 0x40 | (nand.nand_writable << 7); // Status register
+-- 
+2.11.0 (Apple Git-81)
+

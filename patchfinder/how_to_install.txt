@@ -1,0 +1,8 @@
+1) follow these instructions
+https://tiplanet.org/forum/viewtopic.php?p=206415#p206415
+
+2) put ndless_resources.tns from the newest version of ndless in the /ndless folder on the calculator
+
+3) follow these instructions
+https://tiplanet.org/forum/viewtopic.php?p=215458#p215458
+the patcher is the file named cas_patcher_[version].tns in this folder

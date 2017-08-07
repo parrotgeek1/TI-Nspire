@@ -1,0 +1,17 @@
+01858 write ea00000d - autoboot boot2 even if running from ram
+
+194e4 write 00000000 - nop out find matching prod field check
+
+193f4 write 00000000 - skip signature validation splash data
+195b8 write ea00000d - skip signature validation boot2
+
+018a0 write ea000007 - never autoboot diags
+017a4 write ea000004 - never load diags even if key pressed
+017c4 write ea000010 - never download diags
+
+// to do: load manuf from different place: around 19300
+
+01cc8 write E3A03411 - load r4 to a boot2 patcher that loader will copy to 11000000
+01ccc write E12FFF34 - blx r4 (after jump, r3 will be the base address of boot2/boot1.5/whatever)
+
+// need to fix nboot
