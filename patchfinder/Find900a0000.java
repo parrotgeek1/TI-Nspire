@@ -37,6 +37,8 @@ public class Find900a0000 {
 				 1095cdec: e59f3bbc	ldr	r3,[1095d9b0] = 900a002c
 				 1095cdf0: e5933000	ldr	r3,[r3]
 				 */
+				// honestly it might be a better idea to detect 900A0008 (W): Write a 2 to cause a hardware reset
+
 			}
 			for(String s : addrs) { // see if it is reading one of the addresses holding 900a0000 we found earlier
 				// keep looking until the next time that register is written, bc it would no longer hold 900a0000

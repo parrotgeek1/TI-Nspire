@@ -11,4 +11,6 @@ void _start() {
 			*(volatile unsigned short*)ptr = 0b1111100000000000;
 		}
 		return;
+		// delay
+		for(int i = 0; i < 1000000; i++) { }
 	}
