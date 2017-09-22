@@ -42,7 +42,7 @@ void decompress(unsigned int comp_size) {
 	int i;
 
 	for (i = 0; i < 64; i++)
-		common[i] = gethalfword(image);
+		common[i] = gethalfword();
 
 	for (; size > 0; size -= 2) {
 		unsigned short hw;
