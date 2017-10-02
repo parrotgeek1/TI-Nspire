@@ -21,5 +21,5 @@ echo "Compiling patcher"
 arm-none-eabi-gcc -mcpu=arm926ej-s -nostdlib -fPIC -ffreestanding -Os patches.c -o a.elf
 arm-none-eabi-objcopy --only-section=.text --output-target binary a.elf part2
 (printf "PRG\0"; cat part2) > "$2"
-rm -f patches.c cut odump.txt a.elf part2 *.class
+#rm -f cut odump.txt a.elf part2 *.class
 echo "Done!"

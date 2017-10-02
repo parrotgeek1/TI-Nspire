@@ -24,8 +24,10 @@ def define_functions():
     prologues = ["STMFD", "push", "PUSH", "mov", "MOV"]
      
     print "Finding all signatures"
-    ea= 0
+    #ea= 0
     #ea = 0x11800000
+    #ea = 0x10000000
+
     opcodes = set()
     if idc.SegStart(ea) == 0xFFFFFFFF:
         print "Wrong segment address set!"

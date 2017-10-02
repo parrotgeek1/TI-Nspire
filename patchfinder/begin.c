@@ -10,7 +10,7 @@ void _start() {
 		for (ptr = scr_base; ptr < scr_base + scr_size; ptr += 2) {
 			*(volatile unsigned short*)ptr = 0b1111100000000000;
 		}
-		return;
 		// delay
 		for(int i = 0; i < 1000000; i++) { }
+		return;
 	}

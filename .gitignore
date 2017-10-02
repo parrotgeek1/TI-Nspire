@@ -25,3 +25,13 @@ patchfinder/patches.c
 patchfinder/tmpcnv.txt
 
 patchfinder/odump_.txt
+
+patchfinder/os.bin
+
+patchfinder/cut
+
+patchfinder/part2
+
+patchfinder/odump.txt
+
+patchfinder/patches44.c
