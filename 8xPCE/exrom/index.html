@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        This file is part of 'ti_jsemu_wrapper' - see https://github.com/TI-Planet/ti_jsemu_wrapper
+        LGPL3-licensed
+    -->
+    <title>exrom 0.03</title>
+    <meta charset="utf8"/>
+    <script type="text/javascript" src="js/zip/zip.js"></script>
+    <script type="text/javascript" src="js/zip/inflate.js"></script>
+    <script>
+        zip.workerScriptsPath = "js/zip/";
+        zip.useWebWorkers = (location.protocol != "file:") || (navigator.userAgent.indexOf("Firefox") > -1);
+    </script>
+
+    <script type="text/javascript" src="js/main.js"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<h1>exrom 0.03</h1>
+<h3>by parrotgeek1</h3>
+<h3>ONLY FOR CHROME/EDGE/FIREFOX</h3>
+Select jar from 84+CE/83PCE emulator. It will extract the rom or boot code.
+<div id="chooserWrapper">
+    <input type="file" accept=".jar" id="file-input">
+    <span id="initLoading">Loading...</span>
+</div>
+
+<div id="mainWrapper" class="middlecenter">
+    <div id="histo" class="middlecenter">
+        <ul id="list"></ul>
+    </div>
+    <div id="calculatorDivWrapper" class="middlecenter">
+        <div id="calculatorDiv" tabindex="0" class="calculatorDiv">
+            <div class="displayDiv" id="displayDiv">
+                <canvas id="display" class="display" width="320" height="240"></canvas>
+            </div>
+            <img id="hand" src="images/hand.png">
+        </div>
+    </div>
+    <div id="zoom" class="middlecenter">
+        <canvas id="zoomeddisplay" width="480" height="360"></canvas>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="js/loader.js"></script>
+
+
+
+</body>
+</html>
+

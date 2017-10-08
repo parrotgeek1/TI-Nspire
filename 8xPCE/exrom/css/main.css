@@ -1,0 +1,132 @@
+/*
+    This file is part of 'ti_jsemu_wrapper' - see https://github.com/TI-Planet/ti_jsemu_wrapper
+    LGPL3-licensed
+*/
+
+#mainWrapper {
+    margin-top: 1.5%;
+}
+
+#svg {
+    border-radius: 40px;
+    padding: 15px 8px 25px 8px;
+    background-color: #fff;
+    box-shadow: inset 0 -3px 8px -5px rgba(0, 0, 0, 0.75);
+}
+
+#hand {
+    width: 65px;
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    pointer-events: none;
+    visibility: hidden; /* JS will change that when needed */
+}
+
+#displayDiv {
+    transform: translate(8px, 15px);
+    -webkit-transform: translate(8px, 15px);
+}
+
+#calculatorDiv {
+    float: left;
+    box-shadow: 0 20px 22px 2px rgba(0, 0, 0, .75);
+    border-radius: 35px;
+}
+
+#display, #zoom, #svg {
+    cursor: default; /* JS will change that when needed */
+}
+
+#histo, #calculatorDiv, #zoom {
+    display: none; /* JS will change that when needed */
+}
+
+@media (min-width: 900px) {
+    #calculatorDivWrapper {
+        width: 40%;
+    }
+}
+
+#initLoading {
+    display: none; /* JS will change that when needed */
+}
+
+#zoom {
+    float: left;
+    position: relative;
+}
+@media (min-width:1200px) {
+    #zoom { left: 25px; }
+}
+@media (max-width: 990px) {
+    #zoom, #toggleZoomLabel, #zoomValueLabel, #toggleHistoLabel, #histo {
+        display: none !important;
+    }
+}
+#zoomeddisplay {
+    border: 1px solid black;
+}
+
+#leftToolbar, #rightToolbar {
+    position: absolute;
+    bottom: 0;
+    visibility: hidden;
+    background-color: lightgrey;
+    padding: 5px;
+}
+#leftToolbar {
+    z-index: 1001;
+    left: 0;
+    border-top-right-radius: 6px;
+}
+#rightToolbar {
+    z-index: 1002;
+    right: 0;
+    border-top-left-radius: 6px;
+}
+
+#zoomValue {
+    margin: -4px 0 0;
+    position: relative;
+    top: 5px;
+}
+
+#histo {
+    width: 72px;
+    float: left;
+}
+
+#list {
+    margin-top: 5px;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+    display: inline-block;
+}
+
+#list li:first-child {
+    transform: scale(1.25) !important;
+    -webkit-filter: drop-shadow(0px 0px 6px rgba(60, 60, 255, .6));
+    filter: drop-shadow(0px 0px 6px rgba(60, 60, 255, .6));
+}
+
+#list li:nth-child(2) { opacity:.88 }
+#list li:nth-child(3) { opacity:.76 }
+#list li:nth-child(4) { opacity:.64 }
+#list li:nth-child(5) { opacity:.52 }
+#list li:nth-child(6) { opacity:.40 }
+#list li:nth-child(7) { opacity:.28 }
+#list li:nth-child(8) { opacity:.16 }
+
+
+/* Safari only hack */
+@media screen and (min-color-index: 0) and(-webkit-min-device-pixel-ratio: 0) {
+    @media {
+        #list li:first-child {
+            transform: scale(1) !important; /* in case it gets implemented, don't zoom twice */
+            zoom: 1.25 !important;
+        }
+    }
+}
