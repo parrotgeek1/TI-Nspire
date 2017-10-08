@@ -1,0 +1,7 @@
+How to patch boot2 1.0.526 to work on CAS+ EVT1 with U-Boot 
+CONVERTS THEM INTO PRODUCTION CAS+!
+
+If only it had happened years ago...oh well
+
+1) use nsbar_evt1pvt to decompress 1.0.526 boot2 into a format compatible with U-Boot
+2) flash the resulting file with rs232. FIXME: how

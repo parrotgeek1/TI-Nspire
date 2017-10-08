@@ -1,0 +1,25 @@
+boot2 EVT2 versions:
+* preload format: 0x18 bytes, followed by contents of phoenix.img
++ 0x00: nul-terminated string "***PRELOAD_IMAGE***"
++ 0x14: phoenix.img size (big-endian)
+* OS sent by XMODEM has no header (just phoenix.img)
+* preload images in flash have no ECC
+
+boot2 1.0.491:
+* preload format: 0x1C bytes, followed by contents of manifest_img and
+phoenix.img
++ 0x00: nul-terminated string "***PRELOAD_IMAGE***"
++ 0x14: manifest_img size (big-endian)
++ 0x18: phoenix.img size (big-endian)
+* OS sent by XMODEM includes preload header
+* preload images in flash have no ECC
+
+boot2 1.0.526:
+* preload format: 0x20 bytes, followed by contents of manifest_img and
+phoenix.img
++ 0x00: nul-terminated string "***PRELOAD_IMAGE***"
++ 0x14: bytes 55 F0 01 55
++ 0x18: manifest_img size (big-endian)
++ 0x1C: phoenix.img size (big-endian)
+* OS sent by XMODEM includes preload header
+* preload images in flash have ECC in the "extra" part of each flash page

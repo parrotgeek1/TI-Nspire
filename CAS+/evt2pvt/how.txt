@@ -1,0 +1,9 @@
+How to patch boot2 1.0.526 to work on CAS+ EVT with 1.0.1.0.xxxT boot1 
+CONVERTS THEM INTO PRODUCTION CAS+!
+
+If only it had happened years ago...oh well
+
+1) use nsbar_evt2pvt to decompress 1.0.526 boot2 into a format compatible with EVT
+- the old boot2 is not compatible with DVT/PVT compression algorithm
+
+2) flash the resulting file with rs232. it was tested with boot1 1.0.1.0.334T and 1.0.1.0.347T and works on both, so it should work on boot1 compiled between at least Feb 27 2006 - May 10 2006.

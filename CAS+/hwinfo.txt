@@ -1,0 +1,9 @@
+sram is at 20000000 length 40000
+boot1 writes its version at 20013600 (little endian) eb 01 00 01 for 1.0.491
+boot2 ver at 20013604
+the rsa key is copied to sram before its used
+
+debug> wm all.bin 10000000 10000 2000000
+debug> wm sram.bin 20000000 40000
+debug> k 10000000
+debug> c
