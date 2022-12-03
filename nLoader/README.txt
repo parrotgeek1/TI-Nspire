@@ -1,7 +1,14 @@
 nLoader is a custom bootloader for the TI-Nspire CX (not monochrome or CX II).
 It enables loading Ndless on boot ("untethered jailbreak"), skipping OS integrity checks, launching arbitrary unsigned Boot2 images, and downgrading to arbitrary OS versions.
 
-It exploits an amusingly simple vulnerability in how Boot1.5 loads Boot2 images, which was fixed (after nLoader's release) in Boot1.5 4.5, bundled with OS 4.5.1.
+Compilation Requirements: 
+UNIX-like environment, arm-none-eabi toolchain in your $PATH, bash, python3, zip, unzip, awk, binutils, xxd (sometimes in vim-common package)
+Tested with https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads version gcc-arm-11.2-2022.02
+
+make_for_nMaker.sh will produce an image which can be provided to nMaker along with tinspirecx_boot2_4.4.0.8.img.tns or tinspirecx_boot2_4.5.0.14.img.tns (only).
+make_for_emulator.sh requires tinspirecx_boot2_4.5.0.14.img.tns to be in the boot1.5_exploit folder (you can edit the script to use 4.4.0.8 instead). It will produce an image which can be directly provided to Firebird or nspire-emu as a boot2 image.
+
+nLoader exploits an amusingly simple vulnerability in how Boot1.5 loads Boot2 images, which was fixed (after nLoader's release) in Boot1.5 4.5, bundled with OS 4.5.1.
 
 Boot images for the TI-Nspire have a header that specifies, among other things, their base address and whether the contents are compressed.
 Normally, Boot2 images are compressed, and Boot1.5 decompresses them to a temporary buffer before verifying their signature and copying them to the specified base address.
