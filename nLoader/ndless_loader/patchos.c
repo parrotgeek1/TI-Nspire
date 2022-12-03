@@ -1,5 +1,5 @@
 /*
- * taken and adapted from ControlX 5.0.5 by Xavier Andreani
+ * taken and adapted from ControlX 5.0.5 by Xavier Andréani
  * which itself is based on nLaunchy:
  *
  * Copyright (C) 2012-2013 nLaunch team

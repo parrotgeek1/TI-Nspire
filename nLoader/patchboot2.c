@@ -1,5 +1,5 @@
 /*
- * nLoader
+ * taken and adapted from ControlX 5.0.5 by Xavier Andréani
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2, as

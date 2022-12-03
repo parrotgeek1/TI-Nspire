@@ -1,5 +1,5 @@
 nLoader is a custom bootloader for the TI-Nspire CX (not monochrome or CX II).
-It enables loading Ndless on boot ("untethered jailbreak"), skipping OS integrity checks, launching arbitrary unsigned Boot2 images, and downgrading to arbitrary OS versions.
+It enables loading Ndless on boot ("untethered jailbreak"), skipping OS integrity checks, launching arbitrary unsigned Boot2 images, and downgrading to arbitrary OS versions via the boot-time maintenance menu.
 
 Compilation Requirements: 
 UNIX-like environment, arm-none-eabi toolchain in your $PATH, bash, python3, zip, unzip, awk, binutils, xxd (sometimes in vim-common package)
