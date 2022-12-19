@@ -30,14 +30,12 @@ asm(".section .text._start\n"
 int load_boot2() {
     char *BOOT2_PTR = *(char**)(0x111FFFF8);
     if(decompressFiles(BOOT2_PTR,(void *) 0x11800000)) {
-        if(!patch_Boot2()) {
-            puts("Can't patch this boot2, but continuing anyway to avoid bricks");
-            return 1;
+        if(patch_Boot2()) {
+			if(!inject_ndless_loader()) {
+				puts("Injecting Ndless loader not supported for this boot2");
+			}
         } else {
-            if(!inject_ndless_loader()) {
-                puts("Injecting Ndless loader not supported by this boot2");
-                return 1;
-            }
+			puts("Patching not supported for this boot2");
         }
         return 1;
     } else {
