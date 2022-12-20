@@ -1,6 +1,0 @@
-No support for CX/CM
-Doesn't show PP1234567 on the screen during boot
-Better progress messages
-Fake boot2 version in about screen as 3.0.1.131
-If OS fails to load, it launches download mode
-touchpad fix for EVT touchpad/SimpKey keypads

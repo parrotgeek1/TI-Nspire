@@ -1,3 +1,5 @@
+## This readme is outdated, but the installation instructions still work.
+
 nLaunchy v2.7
 =============
 PLEASE READ THE WHOLE README BEFORE DOING ANYTHING.
