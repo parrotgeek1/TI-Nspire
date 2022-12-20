@@ -10,7 +10,7 @@ See [nLoader/README.txt](../../raw/main/nLoader/README.txt).
 
 ## MyNlaunchyCXM
 
-Modified version of [nLaunchy CXM] (https://tiplanet.org/forum/archives_voir.php?id=19507), with:
+Modified version of [nLaunchy CXM](https://tiplanet.org/forum/archives_voir.php?id=19507), with:
 
 * No support for CX/CM (monochrome calculators only)
 * No PP1234567 on the screen during boot
