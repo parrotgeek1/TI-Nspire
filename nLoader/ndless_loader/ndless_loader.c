@@ -49,8 +49,10 @@ void __attribute__((naked)) ndless_loader(void) {
         *(volatile uint32_t*)pBootedBoot2Ver = 0x0432000E;
 
     patch_OS(0x10000000);
+	// this is the same for both boot2 4.4 and 4.5.
+	// we can also get here from 1187d334, but the original return point (1187d33c) immediately jumps to 1187d308, so that's fine
     __asm volatile(
-                   "LDR    PC, =0x1187d308 \n" // this is the same for both boot2 4.4 and 4.5
+                   "LDR    PC, =0x1187d308 \n"
                    ); // after it prints launching image
     __builtin_unreachable();
 }

@@ -18,7 +18,6 @@
 #include "types.h"
 #include "patchboot2.h"
 #include "utils.h"
-#include "casos.h"
 
 #define IGNORE 0
 #define NOP 0xE1A00000
@@ -68,6 +67,7 @@ int patch_Boot2() {
 	unsigned char asicflags = ((*(volatile unsigned int*) 0x900A002C)>>26)&0b11111; // see Hackspire "Memory-mapped I/O ports on CX"
 
     if(index<NBOOT2){
+		// see patchboot2.h for info
         if(asicflags != DESIRED_ASIC) {
             if(boot2_patches[index][IB2_MANUF]) {
                 PATCH_SETW(boot2_patches[index][IB2_MANUF],0xE3A00000|MODELID);

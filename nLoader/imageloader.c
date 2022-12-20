@@ -62,7 +62,7 @@ unsigned int decompress(char** p, char** outp) {
     unsigned int size = getword(p);
     const unsigned int osize = size;
     int CR4 = iscr4();
-    const int pixel_start = (CR4 ? 72 : 163); // XXX: not sure about this on CR4; should be 1 more than when exploit starts
+    const int pixel_start = (CR4 ? 72 : 163); // FIXME: not sure about this on CR4; should be 1 more than when exploit starts
     const int pixel_end = (CR4 ? 159 : 181); // verified on CR4 and non-CR4
 
     unsigned short common[64];
@@ -130,20 +130,12 @@ int decompressFiles(char* buf, char* outbuf)
                 decompress(&p,&outp);
                 break;
             } else {
-                memcpy(outbuf,p,size);
+                memcpy(outbuf,p,size); /* this means no progress bar if it's uncompressed, but that is unlikely */
                 p+=size;
                 outp=outbuf+size;
                 break;
             }
         } else if (field == 0xFFF0) {
-            break;
-        } else if(size8000 && addr && flags && p-data8000>=size8000) {
-            p-=2;
-            size=flags;
-            size-=4;
-            memcpy(outbuf,p,size);
-            p+=size;
-            outp=outbuf+size;
             break;
         } else {
             /* Skip it */

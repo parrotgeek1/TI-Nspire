@@ -131,15 +131,19 @@ static inline void patch_OS(uint32_t base) {
 	uint8_t os_ind = getOSIndex(os_id,base);
 	if(os_ind<NOS) {
 		if(os_patches[os_ind][I_BOOT2UPD]) {
+			// if ndless is supported on this OS, replace the boot2 updater with the ndless loader
 			if(os_patches[os_ind][I_SYSCALLS]) {
 				inline_memcpy((void *)(ndless_loader+OFFSET_MODEL), (void *)&(os_patches[os_ind][I_SYSCALLS]), NSYSCALLS*sizeof(uint32_t));
 				inline_memcpy((void *)(base+(os_patches[os_ind][I_BOOT2UPD]&~0x10000000)),ndless_loader,sizeof(ndless_loader));
 			}
 			else
+				// otherwise nuke the boot2 updater (replace with bx lr - a return statement)
 				PATCH_SETW(base+(os_patches[os_ind][I_BOOT2UPD]&~0x10000000),0xE12FFF1E);
 		}
+		// you shouldn't be using nBoot and nLoader together, but this avoids OS < 4.0.1 crashing if you do
 		if(os_patches[os_ind][I_NBOOT])	PATCH_SETW(base+(os_patches[os_ind][I_NBOOT]&~0x10000000),NOP);
-		if(os_patches[os_ind][I_SELFD])	PATCH_SETW(base+(os_patches[os_ind][I_SELFD]&~0x10000000),0xE12FFF1E);	
+		// disable integrity check which deletes the OS and reboots if it's modified, allowing nTNOC to work again
+		if(os_patches[os_ind][I_SELFD])	PATCH_SETW(base+(os_patches[os_ind][I_SELFD]&~0x10000000),0xE12FFF1E);
 		// skip asic patch if flags match
 		if(os_patches[os_ind][I_ASIC1] && asicflags != os_patches[os_ind][I_FLAGS]) {
 			PATCH_SETB(base+(os_patches[os_ind][I_ASIC1]&~0x10000000),0x54);

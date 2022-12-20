@@ -37,7 +37,7 @@ int inject_ndless_loader() {
         uint8_t *ndless_loader_start=&__ndless_loader_start__, *ndless_loader_end=&__ndless_loader_end__;
 
         memcpy((void *) NDLESS_LOC, ndless_loader_start, ndless_loader_end-ndless_loader_start);
-        // new 1187D300 prestage - where it prints
+        // hijack where it prints launching image
         // somehow this is the same in 4.0.3 and 4.4.0.8 and 4.5.0.14. lucky!
         /*
          RAM:118EC8B0 aBoot2Loading_0 DCB 0xD,0xA             ; DATA XREF: sub_1187D2DC:loc_1187D334↑o

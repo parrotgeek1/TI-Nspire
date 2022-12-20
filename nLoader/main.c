@@ -20,7 +20,6 @@
 #include "imageloader.h"
 #include "patchboot2.h"
 #include "inject_ndless_loader.h"
-#include "casos.h"
 
 asm(".section .text._start\n"
     "_start: .global _start\n"
@@ -49,10 +48,12 @@ void main() {
     ut_disable_watchdog();
     init_screen();
     puts("\r\nnLoader: Created by parrotgeek1. Version: 1.1");
-#ifdef CAS_OS
+#if defined(CAS_OS)
         puts("CAS OS build");
-#else
+#elif defined(NONCAS_OS)
         puts("Non-CAS OS build");
+#else
+#error "Missing -DCAS_OS or -DNONCAS_OS in CFLAGS"
 #endif
 	puts("This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 2, as published by the Free Software Foundation.");
     if(load_boot2()) {
