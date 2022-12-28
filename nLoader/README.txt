@@ -1,13 +1,15 @@
+THE CODE HERE IS NOT FINISHED YET. PLEASE WAIT UNTIL 1.1 IS RELEASED OFFICIALLY BEFORE USING IT.
+
 nLoader is a custom bootloader for the TI-Nspire CX (not monochrome or CX II).
 It enables loading Ndless on boot ("untethered jailbreak"), skipping OS integrity checks, launching arbitrary unsigned Boot2 images (as long as their base address is 0x11800000), and downgrading to arbitrary OS versions via the boot-time maintenance menu.
 
 See this tutorial on how to install nLoader: https://tiplanet.org/forum/viewtopic.php?t=21094
 Important updates to the tutorial:
 * It's recommended to replace tinspirecx_boot2_4.4.0.8.img with tinspirecx_boot2_4.5.0.14.img.
-* PLEASE PAY ATTENTION TO THE ORDER OF STEP D4 AND D5. nMaker has a bug causing it not to display the text prompts correctly sometimes.
+* PLEASE PAY ATTENTION TO THE ORDER OF STEP D4 AND D5. nMaker has a bug causing it not to display the on-screen prompts correctly sometimes.
 * It is now possible to downgrade the OS via the maintenance menu, despite the tutorial claiming otherwise.
 
-If you are on OS 4.5.5 or newer, you can install nLoader without Ndless by creating an image file directly using make_for_emulator.sh, then flashing it with a 3.3v USB to serial adapter: https://tiplanet.org/forum/viewtopic.php?p=219587#p219587
+If you are on OS 4.5.5 or newer, you can downgrade your OS or install Ndless by creating an nLoader image file directly using make_for_emulator.sh, then flashing it with a 3.3v USB to serial adapter: https://tiplanet.org/forum/viewtopic.php?p=219587#p219587
 
 To use an OS older than 3.6, install a newer OS, then use nSwitchOS: https://tiplanet.org/forum/archives_voir.php?id=877138
 
