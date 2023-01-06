@@ -68,17 +68,17 @@ int patch_Boot2();
 #define MANUF_CXB300_0		0x118bc93c
 
 /*
-OS downgrade check patch
-The first cmp to 0x928CC6AA (Bootdata magic number at the start of each flash page)
-Make it never true so that Boot2 never finds the bootdata and therefore never sees the min OS version with in
-
-RAM:118BE690 loc_118BE690                            ; CODE XREF: sub_118BE600+6C↑j
-RAM:118BE690                                         ; sub_118BE600+B4↓j ...
-RAM:118BE690                 LDR             R0, [R4]
-RAM:118BE694                 LDR             LR, =0x928CC6AA
-RAM:118BE698                 CMP             R0, LR
-RAM:118BE69C                 BNE             loc_118BE644
-*/
+ OS downgrade check patch
+ The first cmp to 0x928CC6AA (Bootdata magic number at the start of each flash page)
+ Make it never true so that Boot2 never finds the bootdata and therefore never sees the min OS version with in
+ 
+ RAM:118BE690 loc_118BE690                            ; CODE XREF: sub_118BE600+6C↑j
+ RAM:118BE690                                         ; sub_118BE600+B4↓j ...
+ RAM:118BE690                 LDR             R0, [R4]
+ RAM:118BE694                 LDR             LR, =0x928CC6AA
+ RAM:118BE698                 CMP             R0, LR
+ RAM:118BE69C                 BNE             loc_118BE644
+ */
 
 #define DOWNGRADE_CXB440_8	0x118BE690
 #define DOWNGRADE_CXB450_14	0x118BE628

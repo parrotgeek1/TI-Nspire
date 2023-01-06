@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  */
 
-//#include <machine/cpu-features.h>
-
 	.text
 
     .global memcpy

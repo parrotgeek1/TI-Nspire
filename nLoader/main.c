@@ -22,56 +22,56 @@
 #include "inject_ndless_loader.h"
 
 asm(".section .text._start\n"
-    "_start: .global _start\n"
-    "ldr sp, =#0x10400000\n"
-    "b main\n");
+	"_start: .global _start\n"
+	"ldr sp, =#0x10400000\n"
+	"b main\n");
 
 int load_boot2() {
-    char *BOOT2_PTR = *(char**)(0x111FFFF8);
-    if(decompressFiles(BOOT2_PTR,(void *) 0x11800000)) {
-        if(patch_Boot2()) {
+	char *BOOT2_PTR = *(char**)(0x111FFFF8);
+	if(decompressFiles(BOOT2_PTR,(void *) 0x11800000)) {
+		if(patch_Boot2()) {
 			if(!inject_ndless_loader()) {
 				puts("Injecting Ndless loader not supported for this boot2");
 			}
-        } else {
+		} else {
 			puts("Patching not supported for this boot2");
-        }
-        return 1;
-    } else {
-        puts("Can't decompress boot2");
-        return 0;
-    }
+		}
+		return 1;
+	} else {
+		puts("Can't decompress boot2");
+		return 0;
+	}
 }
 
 void main() {
-    // We don't need to flush icache/dcache here because nothing should ever have been executing from 111c0000 before us
-    ut_disable_watchdog();
-    init_screen();
-    puts("\r\nnLoader: Created by parrotgeek1. Version: 1.1");
+	// We don't need to flush icache/dcache here because nothing should ever have been executing from 111c0000 before us
+	ut_disable_watchdog();
+	init_screen();
+	puts("\r\nnLoader: Created by parrotgeek1. Version: 1.1");
 #if defined(CAS_OS)
-        puts("CAS OS build");
+	puts("CAS OS build");
 #elif defined(NONCAS_OS)
-        puts("Non-CAS OS build");
+	puts("Non-CAS OS build");
 #else
 #error "Missing -DCAS_OS or -DNONCAS_OS in CFLAGS"
 #endif
 	puts("This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 2, as published by the Free Software Foundation.");
-    if(load_boot2()) {
-        puts("nLoader: Loading complete, launching image.");
-        unsigned dummy;
-        __asm volatile(
-                       "0: mrc p15, 0, r15, c7, c10, 3 @ test and clean DCache \n"
-                       " bne 0b \n"
-                       " mov %0, #0 \n"
-                       " mcr p15, 0, %0, c7, c7, 0 @ invalidate ICache and DCache \n" : "=r" (dummy));
-        asm(
-            ".arm \n"
-            "ldr pc, =0x11800000 \n"
-            );
-    } else {
-        puts("nLoader: Error reading/validating BOOT2 image");
-        draw_error(); // boot1.5 does not do this
-    }
-    while(1);
-    __builtin_unreachable();
+	if(load_boot2()) {
+		puts("nLoader: Loading complete, launching image.");
+		unsigned dummy;
+		__asm volatile(
+					"0: mrc p15, 0, r15, c7, c10, 3 @ test and clean DCache \n"
+					" bne 0b \n"
+					" mov %0, #0 \n"
+					" mcr p15, 0, %0, c7, c7, 0 @ invalidate ICache and DCache \n" : "=r" (dummy));
+		asm(
+			".arm \n"
+			"ldr pc, =0x11800000 \n"
+			);
+	} else {
+		puts("nLoader: Error reading/validating BOOT2 image");
+		draw_error(); // boot1.5 does not do this
+	}
+	while(1);
+	__builtin_unreachable();
 }
