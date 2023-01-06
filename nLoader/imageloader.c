@@ -62,7 +62,7 @@ unsigned int decompress(char** p, char** outp) {
     unsigned int size = getword(p);
     const unsigned int osize = size;
     int CR4 = iscr4();
-    const int pixel_start = (CR4 ? 72 : 163); // FIXME: not sure about this on CR4; should be 1 more than when exploit starts
+    const int pixel_start = (CR4 ? 72 : 163); // not sure about this on CR4; should be 1 more than when exploit starts
     const int pixel_end = (CR4 ? 159 : 181); // verified on CR4 and non-CR4
 
     unsigned short common[64];
@@ -122,6 +122,9 @@ int decompressFiles(char* buf, char* outbuf)
                 return 0;
             }
             addr = getword(&p);
+			if(addr != 0x11800000) { /* protect from potential crash loop */
+				return 0;
+			}
             memcpy(&flags,p,4);
             p+=4;
         } else if (field == 0x8070) {

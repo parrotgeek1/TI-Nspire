@@ -78,9 +78,9 @@ int patch_Boot2() {
                 PATCH_SETW(boot2_patches[index][IB2_ASIC]+0x1B,NOP);
                 PATCH_SETW(boot2_patches[index][IB2_ASIC]+0x48B,FAKEASIC1);
             }
-            if(boot2_patches[index][IB2_DOWNGRADE]) {
-                PATCH_SETW(boot2_patches[index][IB2_DOWNGRADE],0xE3A00000); // so comparison will never be true
-            }
+        }
+        if(boot2_patches[index][IB2_DOWNGRADE]) {
+            PATCH_SETW(boot2_patches[index][IB2_DOWNGRADE],0xE3A00000); // so comparison will never be true
         }
         return 1;
     }
