@@ -25,7 +25,7 @@ static __attribute__((always_inline)) void put_byte(uint32_t absaddr, uint8_t sh
     *((uint8_t  *)absaddr) = short_in;
 }
 
-void main(void) {
+void nlaunch(void) {
     static const char nlaunchupdatefilename[] = "/documents/nlaunch/nlaunch.tns";
     
     unsigned dummy;

@@ -18,6 +18,7 @@ Modified version of [nLaunchy CXM](https://tiplanet.org/forum/archives_voir.php?
 * Boot2 version in about screen spoofed as 3.0.1.131
 * If OS fails to load, it launches download mode
 * Touchpad fix for EVT touchpad/SimpKey keypads (in CLASSIC_TOUCHPAD_FIX_EVT folder; untested)
+* Fixes for compiling with GCC 12
 
 Install using the instructions in  [MyNlaunchyCXM/readme.md](MyNlaunchyCXM/readme.md). Parts of it are outdated, but the installation instructions still work.
 
