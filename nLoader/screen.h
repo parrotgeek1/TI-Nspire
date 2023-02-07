@@ -22,10 +22,10 @@
 
 #define SCREEN_WIDTH	320
 #define SCREEN_HEIGHT	240
-#define SCREEN_BASE_PTR		0xC0000010 
+#define SCREEN_BASE_PTR	0xC0000010
 extern uint16_t* SCREEN_BASE_ADDR;
 
-#define MAGENTA  0xF81F
+#define MAGENTA	0xF81F
 
 void init_screen();
 void drawImage(uint16_t* buf, int bufwidth, int bufheight, int shiftx, int shifty, int trsp);

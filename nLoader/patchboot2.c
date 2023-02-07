@@ -65,7 +65,7 @@ int patch_Boot2() {
 	uint32_t id = *((uint32_t*)(0x11800020));
 	uint8_t index = getBoot2Index(id);
 	unsigned char asicflags = ((*(volatile unsigned int*) 0x900A002C)>>26)&0b11111; // see Hackspire "Memory-mapped I/O ports on CX"
-	
+
 	if(index<NBOOT2){
 		// see patchboot2.h for info
 		if(asicflags != DESIRED_ASIC) {

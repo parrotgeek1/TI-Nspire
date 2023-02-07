@@ -60,14 +60,12 @@ void main() {
 		puts("nLoader: Loading complete, launching image.");
 		unsigned dummy;
 		__asm volatile(
-					"0: mrc p15, 0, r15, c7, c10, 3 @ test and clean DCache \n"
-					" bne 0b \n"
-					" mov %0, #0 \n"
-					" mcr p15, 0, %0, c7, c7, 0 @ invalidate ICache and DCache \n" : "=r" (dummy));
-		asm(
-			".arm \n"
-			"ldr pc, =0x11800000 \n"
-			);
+			"0: mrc p15, 0, r15, c7, c10, 3 @ test and clean DCache\n"
+			"bne 0b\n"
+			"mov %0, #0\n"
+			"mcr p15, 0, %0, c7, c7, 0 @ invalidate ICache and DCache\n"
+			"ldr pc, =0x11800000"
+		: "=r" (dummy));
 	} else {
 		puts("nLoader: Error reading/validating BOOT2 image");
 		draw_error(); // boot1.5 does not do this

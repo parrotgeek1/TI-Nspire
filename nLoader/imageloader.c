@@ -64,15 +64,14 @@ unsigned int decompress(char** p, char** outp) {
 	int CR4 = iscr4();
 	const int pixel_start = (CR4 ? 72 : 163); // not sure about this on CR4; should be 1 more than when exploit starts
 	const int pixel_end = (CR4 ? 159 : 181); // verified on CR4 and non-CR4
-	
 	unsigned short common[64];
 	int i;
 	int pixel = 0;
 	int oldpixel = 1;
-	
+
 	for (i = 0; i < 64; i++)
 		common[i] = gethalfword(p);
-	
+
 	for (; size > 0; size -= 2) {
 		unsigned short hw;
 		if (getbits(1,p))
@@ -94,7 +93,6 @@ unsigned int decompress(char** p, char** outp) {
 	getbits(0,0);
 	return size;
 }
-
 
 int decompressFiles(char* buf, char* outbuf)
 {	char* p = buf;

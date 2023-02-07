@@ -35,8 +35,8 @@ int patch_Boot2();
 #define CXB440_8	0x1189BEA0
 #define CXB450_14	0x1189BEC0
 
-// asic :	2C 00 8D E5 01 00 A0 E3 28 50 93 E5 2C 40 93 E5
-// mask :  	FF 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+// asic: 2C 00 8D E5 01 00 A0 E3 28 50 93 E5 2C 40 93 E5
+// mask: FF 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF
 // 1st 0x34 a little before this
 #define ASIC_CXB310_16		0x118B7CF9 // bad
 #define ASIC_CXB301_131		0x118B7D9D
@@ -51,7 +51,7 @@ int patch_Boot2();
 #define ASIC_CXB391_34		0x118B8F09
 #define ASIC_CXB300_0		0x118BBC91
 
-// manuf : B1 00 95 E1 60
+// manuf: B1 00 95 E1 60
 #define MANUF_CMB310_0		0x118b87dc
 #define MANUF_CMB310_16		0x118b88cc
 #define MANUF_CXB310_16		0x118b8998

@@ -17,7 +17,7 @@ If your calculator reboots when you try to calculate something, you've hit a hea
 
 ---
 
-Compilation Requirements: 
+Compilation Requirements:
 UNIX-like environment, arm-none-eabi toolchain in your $PATH, bash, python3, zip, unzip, awk, binutils, xxd (sometimes in vim-common package)
 Tested with https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads version gcc-arm-11.2-2022.02
 
@@ -45,4 +45,4 @@ I used 0xE1A00000 (the real nop instruction) but zeros would probably work too.
 
 My code to jump to the loader had to be exactly 8 bytes, otherwise it would crash. I don't know why this is, but I would guess it has to do with CPU caches.
 
-On Firebird emulating HW-W it didn't work for me; it restarted the exploit by itself, and then claimed "wrong boot2 version". It works on real hardware, and this might have been fixed in a newer Firebird version, but I haven't checked.
+On Firebird emulating HW-W it doesn't work; it restarts the exploit by itself, and then claims "wrong boot2 version". It works on real hardware, and I have no idea why this happens.
