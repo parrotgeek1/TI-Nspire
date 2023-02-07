@@ -17,5 +17,5 @@
 
 #ifndef _IMAGELOADER_H
 #define _IMAGELOADER_H
-int decompressFiles(char* buf, char* outbuf);
+int decompressImage(unsigned char* buf, unsigned char* outbuf);
 #endif

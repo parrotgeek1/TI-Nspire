@@ -49,7 +49,7 @@ void __attribute__((naked)) ndless_loader(void) {
 	else if(id <= CXC454_48) // 4.5.0.14
 		*(volatile uint32_t*)pBootedBoot2Ver = 0x0432000E;
 
-	patch_OS(0x10000000);
+	patch_OS();
 
 	// jump back to after it prints launching image
 	// this address is the same for both boot2 4.4 and 4.5

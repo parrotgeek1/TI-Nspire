@@ -36,7 +36,7 @@ int inject_ndless_loader() {
 	uint32_t ID = *((uint32_t*)(0x11800020));
 	if(ID == CXB440_8 || ID == CXB450_14) {
 		uint8_t *ndless_loader_start=&__ndless_loader_start__, *ndless_loader_end=&__ndless_loader_end__;
-		memcpy((void *) NDLESS_LOC, ndless_loader_start, ndless_loader_end-ndless_loader_start);
+		memcpy((void *) NDLESS_LOC, ndless_loader_start, (unsigned)(ndless_loader_end-ndless_loader_start));
 		// hijack where it prints launching image
 		// somehow this is the same in 4.0.3 and 4.4.0.8 and 4.5.0.14. lucky!
 		/*

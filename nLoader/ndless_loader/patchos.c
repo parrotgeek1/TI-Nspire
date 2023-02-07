@@ -107,7 +107,7 @@ static const uint32_t os_patches[][I_SYSCALLS+NSYSCALLS] = {
 	{CXC455_79,			0b01,	BOOT2UPD_CXC455_79,			IGNORE,					SELFD_CXC455_79,			ASIC1_CXC455_79,		ASIC2_CXC455_79,		FOPEN_CXC455_79,		STAT_CXC455_79,			MALLOC_CXC455_79,		FREAD_CXC455_79,		FCLOSE_CXC455_79,					},
 };
 
-static inline uint8_t getOSIndex(uint32_t os_id, uint32_t base) {
+static inline uint8_t getOSIndex(uint32_t os_id) {
 	uint8_t i=0;
 	for(i=0;i<NOS;i++) {
 		if(os_patches[i][I_ID]==os_id)
@@ -115,10 +115,10 @@ static inline uint8_t getOSIndex(uint32_t os_id, uint32_t base) {
 	}
 	// check "/phoenix/install/TI-Nspire.tnc" string location if necessary
 	if(
-		(os_id==CX302_179X && *((volatile uint32_t *)(base+0x007D60D0)) != 0x6F68702F) ||
-		(os_id==CXC302_179X && *((volatile uint32_t *)(base+0x00831D08)) != 0x6F68702F) ||
-		(os_id==CX390_46X && *((volatile uint32_t *)(base+0x009A9584)) != 0x6F68702F) ||
-		(os_id==CXC390_46X && *((volatile uint32_t *)(base+0x00A0A004)) != 0x6F68702F)
+		(os_id==CX302_179X && *((volatile uint32_t *)0x107D60D0) != 0x6F68702F) ||
+		(os_id==CXC302_179X && *((volatile uint32_t *)0x10831D08) != 0x6F68702F) ||
+		(os_id==CX390_46X && *((volatile uint32_t *)0x109A9584) != 0x6F68702F) ||
+		(os_id==CXC390_46X && *((volatile uint32_t *)0x10A0A004) != 0x6F68702F)
 	) {
 		i++;
 	}
@@ -126,37 +126,37 @@ static inline uint8_t getOSIndex(uint32_t os_id, uint32_t base) {
 }
 
 //! Patch the OS.
-static inline void patch_OS(uint32_t base) {
+static inline void patch_OS() {
 	static uint32_t ndless_loader[] = { NDLESS_LOADER };
 	unsigned char asicflags = ((*(volatile unsigned int*) 0x900A002C)>>26)&0b11111; /* can't be a function here */
-	uint32_t os_id = *((uint32_t*)(base+0x20));
-	uint8_t os_ind = getOSIndex(os_id,base);
+	uint32_t os_id = *((uint32_t*)0x10000020);
+	uint8_t os_ind = getOSIndex(os_id);
 	if(os_ind<NOS) {
 		if(os_patches[os_ind][I_BOOT2UPD]) {
 			if(os_patches[os_ind][I_SYSCALLS]) {
 				// if ndless is supported on this OS, replace the boot2 updater with the ndless loader
 				inline_memcpy((void *)(ndless_loader+OFFSET_MODEL), (void *)&(os_patches[os_ind][I_SYSCALLS]), NSYSCALLS*sizeof(uint32_t));
-				inline_memcpy((void *)(base+(os_patches[os_ind][I_BOOT2UPD]&~0x10000000)),ndless_loader,sizeof(ndless_loader));
+				inline_memcpy((void *)(os_patches[os_ind][I_BOOT2UPD]),ndless_loader,sizeof(ndless_loader));
 			} else {
 				// otherwise nuke the boot2 updater (replace with bx lr - a return statement)
-				PATCH_SETW(base+(os_patches[os_ind][I_BOOT2UPD]&~0x10000000),0xE12FFF1E);
+				PATCH_SETW(os_patches[os_ind][I_BOOT2UPD],0xE12FFF1E);
 			}
 		}
 		// you shouldn't be using nBoot and nLoader together, but this avoids OS < 4.0.1 crashing if you do
-		if(os_patches[os_ind][I_NBOOT])	PATCH_SETW(base+(os_patches[os_ind][I_NBOOT]&~0x10000000),NOP);
+		if(os_patches[os_ind][I_NBOOT])	PATCH_SETW(os_patches[os_ind][I_NBOOT],NOP);
 		// disable integrity check which deletes the OS and reboots if it's modified, allowing nTNOC to work again
-		if(os_patches[os_ind][I_SELFD])	PATCH_SETW(base+(os_patches[os_ind][I_SELFD]&~0x10000000),0xE12FFF1E);
+		if(os_patches[os_ind][I_SELFD])	PATCH_SETW(os_patches[os_ind][I_SELFD],0xE12FFF1E);
 		// skip ASIC patch if OS matches the hardware
 		if(os_patches[os_ind][I_ASIC1] && asicflags != os_patches[os_ind][I_FLAGS]) {
-			PATCH_SETB(base+(os_patches[os_ind][I_ASIC1]&~0x10000000),0x54);
-			PATCH_SETW(base+((os_patches[os_ind][I_ASIC1]&~0x10000000)+0x17),os_patches[os_ind][I_FLAGS]?0xE3A04341:0xE3A04000); // CX CAS/num ASIC2
-			PATCH_SETW(base+((os_patches[os_ind][I_ASIC1]&~0x10000000)+0x1B),0);
-			PATCH_SETW(base+((os_patches[os_ind][I_ASIC1]&~0x10000000)+0x48B),os_patches[os_ind][I_FLAGS]?0x00010105:0); // CX CAS/num ASIC1
+			PATCH_SETB(os_patches[os_ind][I_ASIC1],0x54);
+			PATCH_SETW((os_patches[os_ind][I_ASIC1]+0x17),os_patches[os_ind][I_FLAGS]?0xE3A04341:0xE3A04000); // CX CAS/num ASIC2
+			PATCH_SETW((os_patches[os_ind][I_ASIC1]+0x1B),0);
+			PATCH_SETW((os_patches[os_ind][I_ASIC1]+0x48B),os_patches[os_ind][I_FLAGS]?0x00010105:0); // CX CAS/num ASIC1
 		}
 		if(os_patches[os_ind][I_ASIC2] && asicflags != os_patches[os_ind][I_FLAGS]) {
-			PATCH_SETHW(base+(os_patches[os_ind][I_ASIC2]&~0x10000000),0x2110);
-			PATCH_SETW(base+((os_patches[os_ind][I_ASIC2]&~0x10000000)+8),0);
-			PATCH_SETW(base+((os_patches[os_ind][I_ASIC2]&~0x10000000)+0x118),os_patches[os_ind][I_FLAGS]?0x04000001:0); // CX CAS/num ASIC2
+			PATCH_SETHW(os_patches[os_ind][I_ASIC2],0x2110);
+			PATCH_SETW((os_patches[os_ind][I_ASIC2]+8),0);
+			PATCH_SETW((os_patches[os_ind][I_ASIC2]+0x118),os_patches[os_ind][I_FLAGS]?0x04000001:0); // CX CAS/num ASIC2
 		}
 	}
 }

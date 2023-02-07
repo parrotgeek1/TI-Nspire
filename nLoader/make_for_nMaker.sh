@@ -5,7 +5,7 @@ for i in CAS_OS NONCAS_OS; do
 	cd ndless_loader
 	make clean
 	CFLAGS=-D$i make
-	make cleanrem
+	make cleantemp
 	cd ..
 	make -f _Makefile clean
 	CFLAGS=-D$i make -f _Makefile

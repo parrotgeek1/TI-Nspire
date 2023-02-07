@@ -23,28 +23,23 @@
 
 #define ISVALIDFIELD(field) (((field)>=0x8000 && (field)<0x9000) || ((field)>=0x0200 && (field)<0x0400))
 
-unsigned char getbyte(char** p) {
-	int byte = *(*p);
+unsigned char getbyte(unsigned char** p) {
+	unsigned char byte = *(*p);
 	*p=(*p)+1;
-	if (byte < 0) {
-		puts("boot2 decompression EOF reached unexpectedly");
-		draw_error();
-		while(1);
-	}
 	return byte;
 }
 
-unsigned short gethalfword(char** p) {
+unsigned short gethalfword(unsigned char** p) {
 	unsigned char hi = getbyte(p);
 	return hi << 8 | getbyte(p);
 }
 
-unsigned int getword(char** p) {
+unsigned int getword(unsigned char** p) {
 	unsigned short hi = gethalfword(p);
 	return hi << 16 | gethalfword(p);
 }
 
-int getbits(unsigned int n, char** p) {
+unsigned int getbits(unsigned int n, unsigned char** p) {
 	static unsigned int buf = 0, bits = 0;
 	if(!n) {
 		buf=0;
@@ -55,10 +50,10 @@ int getbits(unsigned int n, char** p) {
 		bits += 8;
 	}
 	bits -= n;
-	return buf >> bits & ((1 << n) - 1);
+	return buf >> bits & ((unsigned)((1 << n) - 1));
 }
 
-unsigned int decompress(char** p, char** outp) {
+unsigned int decompress(unsigned char** p, unsigned char** outp) {
 	unsigned int size = getword(p);
 	const unsigned int osize = size;
 	int CR4 = iscr4();
@@ -75,12 +70,12 @@ unsigned int decompress(char** p, char** outp) {
 	for (; size > 0; size -= 2) {
 		unsigned short hw;
 		if (getbits(1,p))
-			hw = getbits(16,p);
+			hw = (unsigned short)getbits(16,p);
 		else
-			hw = common[getbits(6,p)];
-		**outp = hw >> 8;
+			hw = common[(unsigned short)getbits(6,p)];
+		**outp = (unsigned char)(hw >> 8);
 		(*outp)++;
-		**outp = hw;
+		**outp = (unsigned char)hw;
 		(*outp)++;
 		if((size % 8192) == 0)  {
 			pixel = 1+pixel_start-52+(int)(((double)(osize-size)/(double)osize)*(pixel_end-pixel_start));
@@ -94,13 +89,11 @@ unsigned int decompress(char** p, char** outp) {
 	return size;
 }
 
-int decompressFiles(char* buf, char* outbuf)
-{	char* p = buf;
+int decompressImage(unsigned char* buf, unsigned char* outbuf) {
+	unsigned char* p = buf;
 	unsigned int flags=0;
-	char* outp=outbuf;
+	unsigned char* outp=outbuf;
 	unsigned int addr=0;
-	int size8000=0;
-	char* data8000=0;
 	while (1) {
 		unsigned short field = gethalfword(&p);
 		unsigned int size = field & 0x000F;
@@ -112,8 +105,6 @@ int decompressFiles(char* buf, char* outbuf)
 		}
 		if (field == 0x8000) {
 			/* Don't skip - 8070 is inside this */
-			size8000=size;
-			data8000=p;
 		}
 		else if (field == 0x8080) {
 			if (size < 8) {

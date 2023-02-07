@@ -27,8 +27,8 @@ asm(".section .text._start\n"
 	"b main\n");
 
 int load_boot2() {
-	char *BOOT2_PTR = *(char**)(0x111FFFF8);
-	if(decompressFiles(BOOT2_PTR,(void *) 0x11800000)) {
+	unsigned char *BOOT2_PTR = *(unsigned char**)(0x111FFFF8);
+	if(decompressImage(BOOT2_PTR,(unsigned char *) 0x11800000)) {
 		if(patch_Boot2()) {
 			if(!inject_ndless_loader()) {
 				puts("Injecting Ndless loader not supported for this boot2");
