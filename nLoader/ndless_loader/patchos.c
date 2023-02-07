@@ -32,7 +32,7 @@ static inline void inline_memcpy(void *dest, void *src, size_t n) {
 		cdest[i] = csrc[i];
 }
 
-#define NOP 0x00000000
+#define NOP 0x00000000 /* not the "official" nop, but don't change */
 #define PATCH_SETW(A,B) *(uint32_t *)(A) = (B)
 #define PATCH_SETHW(A,B) *(uint16_t *)(A) = (B)
 #define PATCH_SETB(A,B) *(uint8_t *)(A) = (B)
@@ -125,11 +125,10 @@ static inline uint8_t getOSIndex(uint32_t os_id) {
 	return i;
 }
 
-//! Patch the OS.
-static inline void patch_OS() {
+static inline void patchOS() {
 	static uint32_t ndless_loader[] = { NDLESS_LOADER };
-	unsigned char asicflags = ((*(volatile unsigned int*) 0x900A002C)>>26)&0b11111; /* can't be a function here */
-	uint32_t os_id = *((uint32_t*)0x10000020);
+	uint8_t asicflags = ((*(volatile uint32_t*) 0x900A002C)>>26)&0b11111; /* can't be a function here */
+	uint32_t os_id = *((uint32_t*)TI_OS_ID_ADDR); /* really the data abort handler address */
 	uint8_t os_ind = getOSIndex(os_id);
 	if(os_ind<NOS) {
 		if(os_patches[os_ind][I_BOOT2UPD]) {

@@ -1,5 +1,5 @@
 CFLAGS = -O3 -Wall -Werror -Wextra -Wconversion -marm -mcpu=arm926ej-s -nodefaultlibs -nostartfiles -s -ffreestanding -std=gnu11 -fomit-frame-pointer -Wno-implicit-fallthrough
-LDFLAGS = -e ndless_loader -T ldscript -flto
+LDFLAGS = -e ndlessLoader -T ldscript -flto
 
 all: ../ndless_loader.bin
 

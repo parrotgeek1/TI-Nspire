@@ -17,5 +17,5 @@
 
 #ifndef _IMAGELOADER_H
 #define _IMAGELOADER_H
-int decompressImage(unsigned char* buf, unsigned char* outbuf);
+void* loadTIBootImage(unsigned char* buf);
 #endif

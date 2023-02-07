@@ -45,8 +45,6 @@ uint8_t getBoot2Index(uint32_t id) {
 	return i;
 }
 
-//! Patch the Boot2.
-
 #ifndef CAS_OS
 // CX
 #define DESIRED_ASIC 0
@@ -61,10 +59,10 @@ uint8_t getBoot2Index(uint32_t id) {
 #define MODELID 0x0F
 #endif
 
-int patch_Boot2() {
-	uint32_t id = *((uint32_t*)(0x11800020));
+int patchBoot2() {
+	uint32_t id = *((uint32_t*)TI_BOOT2_ID_ADDR);
 	uint8_t index = getBoot2Index(id);
-	unsigned char asicflags = ((*(volatile unsigned int*) 0x900A002C)>>26)&0b11111; // see Hackspire "Memory-mapped I/O ports on CX"
+	uint8_t asicflags = ((*(volatile uint32_t*) 0x900A002C)>>26)&0b11111; // see Hackspire "Memory-mapped I/O ports on CX"
 
 	if(index<NBOOT2){
 		// see patchboot2.h for info

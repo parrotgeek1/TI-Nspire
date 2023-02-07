@@ -27,8 +27,8 @@ extern uint16_t* SCREEN_BASE_ADDR;
 
 #define MAGENTA	0xF81F
 
-void init_screen();
+void initScreen();
 void drawImage(uint16_t* buf, int bufwidth, int bufheight, int shiftx, int shifty, int trsp);
-void draw_error();
+void drawError();
 void drawBarImage(int bufwidth, int shiftx, int shifty);
 #endif

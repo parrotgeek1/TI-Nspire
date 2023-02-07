@@ -17,5 +17,11 @@
 
 #ifndef _INJECT_NDLESS_LOADER_H
 #define _INJECT_NDLESS_LOADER_H
-int inject_ndless_loader();
+
+#define NDLESS_LOC 0x117F0000 // also in ndless_loader ldscript
+extern void *__ndlessLoaderStart__;
+extern void *__ndlessLoaderEnd__;
+
+int injectNdlessLoader();
+
 #endif

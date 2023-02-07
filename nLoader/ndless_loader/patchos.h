@@ -1,6 +1,9 @@
 #ifndef _PATCHOS_H
 #define _PATCHOS_H
 // OS ID = value at offset 0x20 - order by values
+// it's really the OS data abort handler address - just a way to measure uniqueness
+#define TI_OS_ID_ADDR 		0x10000020
+
 #define CXC301_1753		0x102ed420
 #define CXC302_179X		0x102ED8C0
 #define CX301_1753		0x102ECCD0

@@ -16,6 +16,7 @@
  */
 
 #include "utils.h"
+#include "types.h"
 #include "screen.h"
 #include "imageloader.h"
 #include "patchboot2.h"
@@ -26,27 +27,27 @@ asm(".section .text._start\n"
 	"ldr sp, =#0x10400000\n"
 	"b main\n");
 
-int load_boot2() {
-	unsigned char *BOOT2_PTR = *(unsigned char**)(0x111FFFF8);
-	if(decompressImage(BOOT2_PTR,(unsigned char *) 0x11800000)) {
-		if(patch_Boot2()) {
-			if(!inject_ndless_loader()) {
-				puts("Injecting Ndless loader not supported for this boot2");
+void *loadBoot2() {
+	void *addr;
+	void *BOOT2_PTR = *(uint32_t**)(0x111FFFF8);
+	if((addr = loadTIBootImage(BOOT2_PTR)) != 0) {
+		if((addr == (void *)TI_BOOT2_BASE) && patchBoot2()) {
+			if(!injectNdlessLoader()) {
+				puts("Injecting Ndless loader not supported for this BOOT2");
 			}
 		} else {
-			puts("Patching not supported for this boot2");
+			puts("Patching not supported for this image");
 		}
-		return 1;
-	} else {
-		puts("Can't decompress boot2");
-		return 0;
+		return addr;
 	}
+	return 0;
 }
 
 void main() {
-	// We don't need to flush icache/dcache here because nothing should ever have been executing from 111c0000 before us
-	ut_disable_watchdog();
-	init_screen();
+	register void *addr; /* yes, it really needs to be a register */
+	// We don't need to flush icache/dcache here because nothing should ever have been executing from 0x111c0000 before us
+	disableWatchdog();
+	initScreen();
 	puts("\r\nnLoader: Created by parrotgeek1. Version: 1.1");
 #if defined(CAS_OS)
 	puts("CAS OS build");
@@ -56,19 +57,19 @@ void main() {
 #error "Missing -DCAS_OS or -DNONCAS_OS in CFLAGS"
 #endif
 	puts("This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License version 2, as published by the Free Software Foundation.");
-	if(load_boot2()) {
+	if((addr = loadBoot2()) != 0) {
 		puts("nLoader: Loading complete, launching image.");
-		unsigned dummy;
+		uint32_t dummy;
 		__asm volatile(
 			"0: mrc p15, 0, r15, c7, c10, 3 @ test and clean DCache\n"
 			"bne 0b\n"
-			"mov %0, #0\n"
-			"mcr p15, 0, %0, c7, c7, 0 @ invalidate ICache and DCache\n"
-			"ldr pc, =0x11800000"
-		: "=r" (dummy));
+			"mov %[dummy], #0\n"
+			"mcr p15, 0, %[dummy], c7, c7, 0 @ invalidate ICache and DCache\n"
+			"mov pc, %[addr]"
+		: [dummy] "=r" (dummy) : [addr] "r" (addr));
 	} else {
 		puts("nLoader: Error reading/validating BOOT2 image");
-		draw_error(); // boot1.5 does not do this
+		drawError();
 	}
 	while(1);
 	__builtin_unreachable();

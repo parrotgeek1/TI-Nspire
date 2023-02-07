@@ -1,5 +1,6 @@
 1.0 - 2020-12-09
 ----------------
+! Version 1.0 does not work correctly - do not install it!
 Removed the ability to fully bypass protections preventing running OSes on the wrong model
 Fixed progress bar (no "jumps" at the beginning and end)
 Optimized the performance of the patcher; the boot time should now be equivalent to stock

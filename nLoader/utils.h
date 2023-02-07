@@ -18,10 +18,10 @@
 #ifndef _UTILS_H
 #define _UTILS_H
 #include "types.h"
-int iscr4();
+int isCXCR4Hardware();
 void puts(char *str);
 void putsn(char *str);
-void ut_disable_watchdog(void);
+void disableWatchdog(void);
 void* memcpy(void* dest, void* src, uint32_t size);
 void abort();
 #endif

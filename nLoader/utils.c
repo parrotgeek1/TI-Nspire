@@ -14,16 +14,16 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA.
  *
- * ut_disable_watchdog is from ndless/src/resources/utils.c in https://github.com/ndless-nspire/Ndless/tree/b6eb424a90b7a7f50ecf47782ef79f47e157d51e
+ * disableWatchdog is ut_disable_watchdog from ndless/src/resources/utils.c in https://github.com/ndless-nspire/Ndless/tree/b6eb424a90b7a7f50ecf47782ef79f47e157d51e
  * Ndless is licensed under the MPL 2.1, which the FSF asserts is compatible with the GPL v2.
- * I think putsn is also from Ndless but I can't find the code anymore (it doesn't exist in the latest version). It's so tiny that it arguably doesn't matter.
+ * I think putsn is also from Ndless, but I can't find the code anymore (it doesn't exist in the latest version).
  *
  */
 
 #include "types.h"
 #include "screen.h"
 
-int iscr4() {
+int isCXCR4Hardware() {
 	// Boot1 writes its version to 0xA4012EB0 at boot
 	// CX "CR IV" calculators, with a sideways screen and several other hardware changes, shipped with Boot1 4.0.1
 	return (*(volatile uint32_t *)0xA4012EB0 >= 0x04000000); // i.e. boot1 >= 4.0
@@ -31,7 +31,7 @@ int iscr4() {
 
 // memcpy is now in .S
 
-void ut_disable_watchdog(void) {
+void disableWatchdog(void) {
 	// Disable the watchdog on CX that may trigger a reset
 	*(volatile uint32_t*)0x90060C00 = 0x1ACCE551; // enable write access to all other watchdog registers
 	*(volatile uint32_t*)0x90060008 = 0; // disable reset, counter and interrupt
@@ -53,8 +53,9 @@ void puts(char *str) {
 	putsn("\r\n");
 }
 
+// needed for linking
 void abort() {
-	draw_error();
+	drawError();
 	puts("ABORT");
 	while(1);
 }

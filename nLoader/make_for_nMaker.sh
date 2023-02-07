@@ -1,7 +1,9 @@
 #!/bin/bash -e
 cd "$(dirname "$0")"
 for i in CAS_OS NONCAS_OS; do
-	echo $i
+	echo "++++++++++++++++++++++++++++++"
+	echo Making nMaker image for $i
+	echo "++++++++++++++++++++++++++++++"
 	cd ndless_loader
 	make clean
 	CFLAGS=-D$i make

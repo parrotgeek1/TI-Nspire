@@ -18,9 +18,17 @@
 #ifndef _PATCHBOOT2_H
 #define _PATCHBOOT2_H
 
-int patch_Boot2();
+int patchBoot2();
 
-// Boot2 ID = value at offset 0x20
+#define TI_BOOT2_BASE	0x11800000
+// it's really the boot2 data abort handler address - just a way to measure uniqueness 
+#define TI_BOOT2_ID_ADDR	(TI_BOOT2_BASE+0x20)
+
+// the running boot2 writes its version at 0xA4012EB4
+// the OS uses this instead of reading the version from flash
+// this luckily allows us to spoof the version
+#define BOOTED_BOOT2_VER_LOC	0xA4012EB4
+
 #define CXB300_0	0x118205D0
 #define CXB310_16	0x1189B110
 #define CXB391_34	0x1189B840

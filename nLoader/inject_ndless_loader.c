@@ -18,25 +18,22 @@
 #include "types.h"
 #include "patchboot2.h"
 #include "utils.h"
-
-#define NDLESS_LOC 0x117F0000 // also in ldscript ndless_loader
-extern unsigned char __ndless_loader_start__;
-extern unsigned char __ndless_loader_end__;
+#include "inject_ndless_loader.h"
 
 asm(R"nLoader(
-	.globl __ndless_loader_start__
-	.globl __ndless_loader_end__
-	__ndless_loader_start__:
+	.global __ndlessLoaderStart__
+	.global __ndlessLoaderEnd__
+	__ndlessLoaderStart__:
 	.incbin "ndless_loader.bin"
-	__ndless_loader_end__:
+	__ndlessLoaderEnd__:
 	)nLoader"
 );
 
-int inject_ndless_loader() {
-	uint32_t ID = *((uint32_t*)(0x11800020));
+int injectNdlessLoader() {
+	uint32_t ID = *((uint32_t*)TI_BOOT2_ID_ADDR);
 	if(ID == CXB440_8 || ID == CXB450_14) {
-		uint8_t *ndless_loader_start=&__ndless_loader_start__, *ndless_loader_end=&__ndless_loader_end__;
-		memcpy((void *) NDLESS_LOC, ndless_loader_start, (unsigned)(ndless_loader_end-ndless_loader_start));
+		void *ndlessLoaderStart=&__ndlessLoaderStart__, *ndlessLoaderEnd=&__ndlessLoaderEnd__;
+		memcpy((void *)NDLESS_LOC, ndlessLoaderStart, (unsigned)(ndlessLoaderEnd-ndlessLoaderStart));
 		// hijack where it prints launching image
 		// somehow this is the same in 4.0.3 and 4.4.0.8 and 4.5.0.14. lucky!
 		/*
@@ -48,11 +45,11 @@ int inject_ndless_loader() {
 		 RAM:1187D300                 LDR     R0, =aBoot2LoadingCo ; "\r\nBOOT2: loading complete (%d ticks),"...
 		 RAM:1187D304                 BL      sub_118D08E4
 		*/
-		*(volatile unsigned int *)0x1187d300 = 0xe51ff004; // jump to below value
-		*(volatile unsigned int *)0x1187d304 = NDLESS_LOC;
+		*(volatile uint32_t *)0x1187d300 = 0xe51ff004; // jump to below value
+		*(volatile uint32_t *)0x1187d304 = NDLESS_LOC;
 		// the other one without <%s>
-		*(volatile unsigned int *)0x1187d334 = 0xe51ff004; // jump to below value
-		*(volatile unsigned int *)0x1187d338 = NDLESS_LOC;
+		*(volatile uint32_t *)0x1187d334 = 0xe51ff004; // jump to below value
+		*(volatile uint32_t *)0x1187d338 = NDLESS_LOC;
 		return 1;
 	} else {
 		// This boot2 isn't supported
