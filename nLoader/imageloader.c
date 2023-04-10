@@ -90,8 +90,8 @@ uint32_t decompress(uint8_t** p, uint8_t** outp) {
 	return size;
 }
 
-void* loadTIBootImage(uint8_t* buf) {
-	uint8_t* p = buf;
+void* loadTIBootImage(void* buf) {
+	uint8_t* p = (uint8_t *)buf;
 	uint32_t flags = 0;
 	uint8_t* outp;
 	uint8_t* outbuf = 0;
