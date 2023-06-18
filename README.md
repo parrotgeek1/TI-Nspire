@@ -26,7 +26,7 @@ Install using the instructions in  [MyNlaunchyCXM/readme.md](MyNlaunchyCXM/readm
 
 Minuscule Ndless program (for OS 3.1+) to overclock monochrome calculators to 150MHz. 
 
-Put it in the `ndless/startup` folder or just run it once. There is no UI.
+Put it in the `ndless/startup` folder or just run it after every reboot. There is no UI.
 
 ## touchpad_proto_fix
 
