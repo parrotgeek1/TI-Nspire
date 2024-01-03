@@ -46,7 +46,7 @@ Boot1.5 has a base address of 0x11200000, so if you make a boot2 image that over
 One non-obvious thing to me during the development of this exploit was how to copy the entire loader into RAM before Boot1.5 crashes due to being overwritten. I realized I could set the base address below 0x11200000, and align the data in the file such that 0x11200000 was still correctly overwritten. To avoid including a small piece of copyrighted Boot1.5 code in the exploit images, I simply overwrote the beginning of Boot1.5 with a nop sled followed by a jump to the address of the loader.
 
 To find the size of the nop sled for a given Boot1.5 version:
-In an emulator, feed boot1.5 an image of all A's with base address 0x11200000 (use mkexp.sh to create it).
+In an emulator, feed boot1.5 an image of all A's with base address 0x11200000 (use make_exploit_image.sh to create it).
 It will crash with "undefined instruction 41414141".
 The nop sled size is (crashed_PC - 0x11200000).
 I used 0xE1A00000 (the real nop instruction) but zeros would probably work too.
