@@ -1,5 +1,7 @@
 THE CODE HERE DOES NOT WORK AND WILL NOT BE FIXED. See the main readme for more information.
 
+If you are already on an OS that supports Ndless, you can use critor's modified version of nLoader which supports OS 4.5.4: https://tiplanet.org/forum/viewtopic.php?p=260166#p260166
+
 nLoader
 =======
 
