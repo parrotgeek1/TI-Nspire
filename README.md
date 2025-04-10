@@ -1,4 +1,6 @@
-## Update 2025-04-09: I have decided that I will not do any further work on the code in this repository, including to fix nLoader. While it is unfortunate that the current nLoader code is broken, I am simply not interested in calculators anymore. Fixing it would likely require a significant amount of effort, because I don't know the cause of the current issues, and finding a working downgrade patch would require additional reverse engineering. I apologize for any inconvenience this may cause you.
+## Update 2025-04-09: I have decided that I will not do any further work on the code in this repository, including to fix nLoader.
+
+While it is unfortunate that the current nLoader code is broken, I am simply not interested in calculators anymore. Fixing it would likely require a significant amount of effort, because I don't know the cause of the current issues, and finding a working downgrade patch would require additional reverse engineering. I apologize for any inconvenience this may cause you.
 
 # TI-Nspire
 
